@@ -30,23 +30,23 @@ struct Tetris {
 HANDLE hOut;
 
 
-int color(int c);
-void gotoxy(int x, int y);
-void DrwaGameframe();
-void Flag(struct Tetris*);
-void MakeTetris(struct Tetris*);
-void PrintTetris(struct Tetris*);
-void CleanTetris(struct Tetris*);
-int ifMove(struct Tetris*);
-void Del_Fullline(struct Tetris*);
-void Gameplay();
-void regulation();
-void explation();
-void welcom();
-void Replay(struct Tetris* tetris);
-void title();
-void flower();
-void close();
+int color(int c);                          // 设置控制台文字颜色
+void gotoxy(int x, int y);                 // 移动光标到(x,y)，实现任意位置打印
+void DrwaGameframe();                      // 画游戏主窗口（边框+预览区+提示）
+void Flag(struct Tetris*);                 // 随机生成当前方块和下一个方块
+void MakeTetris(struct Tetris*);           // 根据方块类型，在数组中标记4个格子的坐标
+void PrintTetris(struct Tetris*);          // 在屏幕上画出方块+右侧面板信息(等级/分数/速度)
+void CleanTetris(struct Tetris*);          // 擦除屏幕上的方块（用空格覆盖）
+int ifMove(struct Tetris*);                // 碰撞检测：检查方块能否放在当前位置，能返回1，否返回0
+void Del_Fullline(struct Tetris*);         // 消除满行+上面方块下落+加分升级
+void Gameplay();                           // 游戏主循环（下落、按键、消行、结束判定）
+void regulation();                         // 显示"游戏规则"界面
+void explation();                          // 显示"按键说明"界面
+void welcom();                             // 主菜单（开始/说明/规则/退出）
+void Replay(struct Tetris* tetris);        // 重新开始游戏
+void title();                              // 画标题大字"趣味俄罗斯方块"
+void flower();                             // 画装饰花朵和草地
+void close();                              // 退出程序
 
 
 int color(int c) {
@@ -326,10 +326,10 @@ void MakeTetris(struct Tetris *tetris) {
             a[tetris->x+2][tetris->y] = b[3];
             break;
         case 8:
-            color(11);
-            a[tetris->x][tetris->y-1] = b[1];
-            a[tetris->x][tetris->y+1] = b[2];
-            a[tetris->x-2][tetris->y] = b[3];
+            color(14);
+            a[tetris->x-2][tetris->y] = b[1];
+            a[tetris->x][tetris->y-1] = b[2];
+            a[tetris->x+2][tetris->y-1] = b[3];
             break;
         case 9:
             color(14);
@@ -451,8 +451,8 @@ int ifMove(struct Tetris *tetris) {
           a[tetris->x-2][tetris->y]==0 && a[tetris->x+2][tetris->y]==0 ) ) ||
           ( tetris->flag==7 && ( a[tetris->x][tetris->y-1]==0 &&
           a[tetris->x][tetris->y+1]==0 && a[tetris->x+2][tetris->y]==0 ) ) ||
-          ( tetris->flag==8 && ( a[tetris->x][tetris->y+1]==0 &&
-          a[tetris->x-2][tetris->y]==0 && a[tetris->x+2][tetris->y+1]==0 ) ) ||
+          ( tetris->flag==8 && ( a[tetris->x-2][tetris->y]==0 &&
+          a[tetris->x][tetris->y-1]==0 && a[tetris->x+2][tetris->y-1]==0 ) ) ||
           ( tetris->flag==9 && ( a[tetris->x][tetris->y-1]==0 &&
           a[tetris->x-2][tetris->y]==0 && a[tetris->x+2][tetris->y+1]==0 ) ) ||
           ( tetris->flag==10 && ( a[tetris->x][tetris->y-1]==0 &&
@@ -596,10 +596,15 @@ void Gameplay() {
                         tetris->flag %= 4;
                         tetris->flag += 4;
                     }
-                    if(tetris->flag >= 8 && tetris->flag <= 11) {
+                    if(tetris->flag >= 8 && tetris->flag <= 9) {
                         tetris->flag++;
-                        tetris->flag %= 4;
+                        tetris->flag %= 2;
                         tetris->flag += 8;
+                    }
+                    if(tetris->flag >= 10 && tetris->flag <= 11) {
+                        tetris->flag++;
+                        tetris->flag %= 2;
+                        tetris->flag += 10;
                     }
                     if(tetris->flag >= 12 && tetris->flag <= 15) {
                         tetris->flag++;
