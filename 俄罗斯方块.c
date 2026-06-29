@@ -604,6 +604,9 @@ void Gameplay() {
                         tetris->flag %= 4;
                         tetris->flag += 16;
                     }
+                    if(ifMove(tetris) == 0) {
+                        tetris->flag = Temp2;
+                    }
                 }
                 if(ch == 32) {
                     PrintTetris(tetris);
@@ -636,5 +639,43 @@ void Gameplay() {
                 break;
             }
         }
+
+        for(i = tetris->y-2; i < tetris->y+2; i++) {
+            if(i == FrameY) {
+                system("cls");
+                gotoxy(29,7);                          // 设置显示位置
+                printf("  \n");
+                color(12);                             // 红色
+                printf("\t\t\t■■■    ■   ■■     \n");
+                printf("\t\t\t■        ■   ■      \n");
+                printf("\t\t\t■        ■   ■      \n");
+                printf("\t\t\t■        ■   ■      \n");
+                printf("\t\t\t■■■    ■   ■■     \n");
+                gotoxy(17,18);
+                color(14);
+                printf("我要重新玩一局-------1");
+                gotoxy(44,18);
+                printf("不玩了，退出吧-------2\n");
+                int n;
+                gotoxy(32,20);
+                printf("选择【1/2】：");
+                color(11);
+                scanf("%d", &n);                       // 输入1或2
+                switch (n)                             // 分支语句
+                {
+                    case 1:
+                        system("cls");
+                        Replay(tetris);                // 重新开始游戏
+                        break;
+                    case 2:
+                        exit(0);
+                        break;
+                }
+            }
+        }
+        tetris->flag = tetris->next;           // 清除下一个俄罗斯方块的图形(右边窗口)
+        tetris->x = FrameX + 2 * Frame_width + 6;
+        tetris->y = FrameY + 10;
+        CleanTetris(tetris);
     }
 }
