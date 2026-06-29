@@ -409,7 +409,7 @@ void PrintTetris(struct Tetris *tetris) {
         for(j = tetris->y-2; j <= tetris->y+1; j++) {
             if(a[i][j] == 1 && j > FrameY) {
                 gotoxy(i, j);
-                printf("■");
+                printf("⬛");
             }
         }
     }
@@ -518,7 +518,7 @@ void Del_Fullline(struct Tetris *tetris) {
                                 printf("  ");
                                 a[i][k+1] = 1;
                                 gotoxy(i, k+1);
-                                printf("■");
+                                printf("⬛");
                             }
                         }
                     }
@@ -555,7 +555,7 @@ void Gameplay() {
     while(1) {
         Flag(tetris);
         Temp = tetris->flag;
-        tetris->x = FrameX + Frame_width + 6;
+        tetris->x = FrameX + 2 * Frame_width + 6;
         tetris->y = FrameY + 10;
         tetris->flag = tetris->next;
         PrintTetris(tetris);
@@ -653,11 +653,11 @@ void Gameplay() {
                 gotoxy(29,7);                          // 设置显示位置
                 printf("  \n");
                 color(12);                             // 红色
-                printf("\t\t\t■■■    ■   ■■     \n");
-                printf("\t\t\t■        ■   ■      \n");
-                printf("\t\t\t■        ■   ■      \n");
-                printf("\t\t\t■        ■   ■      \n");
-                printf("\t\t\t■■■    ■   ■■     \n");
+                printf("\t\t\t⬛⬛⬛    ⬛   ⬛⬛     \n");
+                printf("\t\t\t⬛        ⬛   ⬛      \n");
+                printf("\t\t\t⬛        ⬛   ⬛      \n");
+                printf("\t\t\t⬛        ⬛   ⬛      \n");
+                printf("\t\t\t⬛⬛⬛    ⬛   ⬛⬛     \n");
                 gotoxy(17,18);
                 color(14);
                 printf("我要重新玩一局-------1");
@@ -727,6 +727,7 @@ void explation() {
     system("cls");
     main();
 }
+
 void regulation() {
     int i, j = 1;
     system("cls");
