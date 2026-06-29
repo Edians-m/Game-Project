@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 
@@ -30,8 +32,8 @@ HANDLE hOut;
 
 int color(int c);
 void gotoxy(int x, int y);
-void DrwaGamefeame();
-void flag(struct Tetris*);
+void DrwaGameframe();
+void Flag(struct Tetris*);
 void MakeTetris(struct Tetris*);
 void PrintTetris(struct Tetris*);
 void CleanTetris(struct Tetris*);
@@ -211,17 +213,22 @@ void welcom() {
     switch(n) {
         case 1:
             system("cls");
+            DrwaGameframe();  //制作游戏窗口
+            Gameplay();       //开始游戏
             break;
         case 2:
+            explation();
             break;
         case 3:
+            regulation();
             break;
         case 4:
+            close();
             break;
     }
 }
 
-void DrwaGamefeame() {
+void DrwaGameframe() {
     gotoxy(FrameX+Frame_width-7, FrameY-2);
     color(11);
     printf("趣味俄罗斯方块");
@@ -678,4 +685,83 @@ void Gameplay() {
         tetris->y = FrameY + 10;
         CleanTetris(tetris);
     }
+}
+
+void Replay(struct Tetris *tetris) {
+    system("cls");
+    memset(a, 0, 6400*sizeof(int));
+    DrwaGameframe();
+    Gameplay();
+}
+
+void explation() {
+    int i, j = 1;
+    system("cls");
+    color(13);
+    gotoxy(32, 3);
+    printf("按键说明");
+    color(2);
+    for(i = 6; i <= 16; i++) {
+        for(j = 15; j <= 60; j++) {
+            gotoxy(j, i);
+            if(i == 6 || i == 16)   printf("=");
+            else if(j == 15 || j == 39) printf("||");
+        }
+    }
+    color(3);
+    gotoxy(18, 7);
+    printf("tip1：玩家可以通过← →方向键来移动方块");
+    color(10);
+    gotoxy(18, 9);
+    printf("tips2：通过↑使方块旋转");
+    color(14);
+    gotoxy(18, 11);
+    printf("tip3：通过↓加速方块下落");
+    color(11);
+    gotoxy(18, 13);
+    printf("tip4：按空格暂停游戏，再按空格键继续");
+    color(4);
+    gotoxy(18, 15);
+    printf("tip5：按ESC退出游戏");
+    getch();
+    system("cls");
+    main();
+}
+void regulation() {
+    int i, j = 1;
+    system("cls");
+    color(13);
+    gotoxy(34, 3);
+    printf("游戏规则");
+    color(2);
+    for(i = 6; i <= 18; i++) {
+        for(j = 12; j <= 70; j++) {
+            gotoxy(j, i);
+            if(i == 6 || i == 18)   printf("=");
+            else if(j == 12 || j == 69) printf("||");
+        }
+    }
+    color(12);
+    gotoxy(16, 7);
+    printf("tip1：不同形状的小方块从屏幕上方落下来，玩家通过调整");
+    gotoxy(22, 9);
+    printf("方块的位置和方向，使他们在屏幕底部拼出完整的");
+    gotoxy(22, 11);
+    printf("一行或几行");
+    color(14);
+    gotoxy(16, 13);
+    printf("tip2：每消除一行，积分增加100");
+    color(11);
+    gotoxy(16, 15);
+    printf("tip33：每累计1000分，会提升一个等级");
+    color(10);
+    gotoxy(16, 17);
+    printf("tip4：提升等级会使方块下落速度加快，游戏难度加大");
+    getch();
+    system("cls");
+    welcom();
+}
+
+void close() {
+    exit(0);
 }
