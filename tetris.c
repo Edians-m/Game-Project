@@ -18,14 +18,14 @@ int b[4] = {0};
 
 
 struct Tetris {
-    int x;
+    int x;          //中心方块x轴坐标
     int y;
-    int flag;
-    int next;
-    int speed;
-    int number;
-    int score;
-    int level;
+    int flag;       //标记方块类型的序号
+    int next;       //下一个俄罗斯方块类型的序号
+    int speed;      //速度
+    int number;     //产生俄罗斯方块的个数
+    int score;      //分数
+    int level;      //等级
 };
 HANDLE hOut;
 
@@ -569,15 +569,15 @@ void Gameplay() {
             CleanTetris(tetris);
             Temp = tetris->x;
             Temp2=tetris->flag;
-            if(kbhit()) {
+            if(kbhit()) {                        // 检测键盘输入
                 ch = getch();
-                if(ch == 75) {
+                if(ch == 75) {                   // ← 左方向键：方块左移
                     tetris->x -= 2;
                 }
-                if(ch == 77) {
+                if(ch == 77) {                   // → 右方向键：方块右移
                     tetris->x += 2;
                 }
-                if(ch == 80) {
+                if(ch == 80) {                   // ↓ 下方向键：方块加速下落
                     if(ifMove(tetris) != 0) {
                         tetris->y += 2;
                     }
@@ -585,7 +585,7 @@ void Gameplay() {
                         tetris->y = FrameY + Frame_height - 2;
                     }
                 }
-                if(ch == 72) {
+                if(ch == 72) {                   // ↑ 上方向键：旋转方块（不同形状不同旋转规则）
                     if(tetris->flag >= 2 && tetris->flag <= 3) {
                         tetris->flag++;
                         tetris->flag %= 2;
@@ -620,7 +620,7 @@ void Gameplay() {
                         tetris->flag = Temp2;
                     }
                 }
-                if(ch == 32) {
+                if(ch == 32) {                   // 空格键：暂停游戏，再按一次恢复
                     PrintTetris(tetris);
                     while(1) {
                         if(kbhit()) {
@@ -631,7 +631,7 @@ void Gameplay() {
                         }
                     }
                 }
-                if(ch == 27) {
+                if(ch == 27) {                   // ESC键：退出到主菜单
                     system("cls");
                     memset(a, 0, 6400*sizeof(int));
                     welcom();
@@ -658,11 +658,11 @@ void Gameplay() {
                 gotoxy(29,7);                          // 设置显示位置
                 printf("  \n");
                 color(12);                             // 红色
-                printf("\t\t\t⬛⬛⬛    ⬛   ⬛⬛     \n");
-                printf("\t\t\t⬛        ⬛   ⬛      \n");
-                printf("\t\t\t⬛        ⬛   ⬛      \n");
-                printf("\t\t\t⬛        ⬛   ⬛      \n");
-                printf("\t\t\t⬛⬛⬛    ⬛   ⬛⬛     \n");
+                printf("\t\t\t⬛⬛⬛    ⬛       ⬛    ⬛⬛   \n");
+                printf("\t\t\t⬛        ⬛ ⬛    ⬛     ⬛  ⬛    \n");
+                printf("\t\t\t⬛⬛⬛   ⬛   ⬛  ⬛     ⬛    ⬛  \n");
+                printf("\t\t\t⬛        ⬛     ⬛⬛     ⬛   ⬛   \n");
+                printf("\t\t\t⬛⬛⬛   ⬛       ⬛     ⬛⬛⬛     \n");
                 gotoxy(17,18);
                 color(14);
                 printf("我要重新玩一局-------1");
