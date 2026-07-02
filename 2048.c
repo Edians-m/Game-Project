@@ -15,28 +15,29 @@ int BOX[4][4] = {0, 0, 0, 0,
 HANDLE hOut;            //控制台句柄
 
 
-void gotoxy(int x, int y);
-int color(int c);
-int TextColors(int i);          //根据数字修改颜色
-void drawTheGameBox();           //绘制游戏界面
-int *add(int item[]);           //合并数字
-int ifMove(int item[]);
-void Gameplay();
-void Replay();
-int if2n(int x);
-int ifup();
-int ifdown();
-int ifright();
-int BOXmax();
-int Gamefaile();
-int Gamewin();
-int keyboardControl(int key);
-void close();
-void title();
-void choice();
-void Rabbit();
-void regulation();
-void explation();
+void gotoxy(int x, int y);              //移动控制台光标到(x,y)
+int color(int c);                       //设置控制台文字颜色
+int TextColors(int i);                  //根据数字修改颜色
+void drawTheGameBox();                  //绘制游戏界面
+int *add(int item[]);                   //合并同行/列的相同数字
+int ifMove(int item[]);                 //判断某行/列是否可以移动
+void Gameplay();                        //游戏主循环
+void Replay();                          //重新开始游戏
+int if2n(int x);                        //判断x是否为2的幂次
+int ifup();                             //判断是否能向上移动
+int ifdown();                           //判断是否能向下移动
+int ifleft();                           //判断是否能向左移动
+int ifright();                          //判断是否能向右移动
+int BOXmax();                           //获取棋盘中的最大数字
+int Gamefaile();                        //判断游戏是否失败
+int Gamewin();                          //判断游戏是否胜利
+int keyboardControl(int key);           //处理键盘方向键输入
+void close();                           //关闭游戏
+void title();                           //显示游戏标题
+void choice();                          //显示主菜单
+void Rabbit();                          //绘制兔子图标
+void regulation();                      //显示游戏规则
+void explation();                       //显示按键说明
 
 
 void gotoxy(int x, int y) {
@@ -267,6 +268,9 @@ int* add(int item[]) {
         if(tep[i] != 0) {
             tmp[j++] = tep[i];
         }
+    }
+    for(; j < 4; j++) {
+        tmp[j] = 0;
     }
     return (int *)(&tmp);
 }
